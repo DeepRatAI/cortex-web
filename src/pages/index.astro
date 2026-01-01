@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Features from '../components/Features.astro';
+import Comparison from '../components/Comparison.astro';
+import FAQ from '../components/FAQ.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import Footer from '../components/Footer.astro';
+import { type Lang, defaultLang } from '../i18n/translations';
+
+// Default to Spanish for static build
+const lang: Lang = defaultLang;
+---
+
+<Layout lang={lang}>
+  <Header lang={lang} />
+  <main>
+    <Hero lang={lang} />
+    <Features lang={lang} />
+    <Comparison lang={lang} />
+    <FAQ lang={lang} />
+    <FinalCTA lang={lang} />
+  </main>
+  <Footer lang={lang} />
+</Layout>

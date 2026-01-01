@@ -1,0 +1,62 @@
+---
+import { type Lang, defaultLang, translations } from '../i18n/translations';
+
+interface Props {
+  lang?: Lang;
+}
+
+const lang = Astro.props.lang ?? defaultLang;
+const t = translations[lang].comparison;
+
+// All comparison features
+const keyFeatures = ['selfHosted', 'multiTenant', 'piiDetection', 'hybridSearch', 'streaming', 'openSource', 'auditTrails', 'extensible'] as const;
+const competitors = ['cortex', 'langchain', 'chatgpt'] as const;
+---
+
+<section id="comparison" class="py-16 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-4xl mx-auto">
+    <!-- Section Header -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">
+        {t.title} <span class="text-blue-400">{t.titleHighlight}</span>
+      </h2>
+      <p class="text-lg text-slate-400">
+        {t.subtitle}
+      </p>
+    </div>
+    
+    <!-- Compact Table -->
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-slate-700">
+            <th class="text-left py-3 px-4 text-slate-400 font-medium"></th>
+            {competitors.map((comp, idx) => (
+              <th class={`py-3 px-4 text-center ${idx === 0 ? 'text-blue-400' : 'text-slate-300'} font-medium`}>
+                {t.competitors[comp].name}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {keyFeatures.map((feature) => (
+            <tr class="border-b border-slate-800">
+              <td class="py-3 px-4 text-slate-300">{t.features[feature].name}</td>
+              {competitors.map((comp, idx) => (
+                <td class={`py-3 px-4 text-center ${idx === 0 ? 'bg-blue-500/5' : ''}`}>
+                  {t.features[feature][comp] === true ? (
+                    <span class="text-emerald-400">✓</span>
+                  ) : t.features[feature][comp] === false ? (
+                    <span class="text-slate-600">—</span>
+                  ) : (
+                    <span class="text-amber-400 text-xs">{t.features[feature][comp]}</span>
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

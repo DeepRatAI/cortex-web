@@ -1,0 +1,184 @@
+---
+import '../styles/global.css';
+import { type Lang, defaultLang, translations } from '../i18n/translations';
+
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: Lang;
+}
+
+const lang = Astro.props.lang ?? defaultLang;
+const t = translations[lang];
+
+const { 
+  title = t.meta.title,
+  description = t.meta.description,
+} = Astro.props;
+
+const siteUrl = "https://cortex.deeprat.tech";
+const ogImage = `${siteUrl}/og-image.png`;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content="RAG, knowledge assistant, enterprise AI, vector search, LLM, open source, Python, Qdrant, FastAPI" />
+    <meta name="author" content="DeepRat AI" />
+    <meta name="theme-color" content="#0F172A" />
+    <link rel="canonical" href={`${siteUrl}${lang === 'en' ? '/en' : ''}`} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={siteUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content="Cortex Knowledge Assistant" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={siteUrl} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImage} />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Cortex Knowledge Assistant",
+        "description": "Open source RAG system with clean architecture for enterprise knowledge management",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Cross-platform",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "DeepRat AI"
+        },
+        "license": "https://www.gnu.org/licenses/agpl-3.0.html"
+      }
+    </script>
+  </head>
+  <body class="bg-slate-900 text-slate-50 antialiased">
+    <div class="grid-bg min-h-screen">
+      <slot />
+    </div>
+    
+    <!-- Scroll Reveal Animations -->
+    <script>
+      // Intersection Observer for scroll animations with stagger support
+      document.addEventListener('DOMContentLoaded', () => {
+        const observerOptions = {
+          root: null,
+          rootMargin: '0px 0px -80px 0px',
+          threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('revealed');
+              
+              // Stagger children if they exist
+              const staggerChildren = entry.target.querySelectorAll('.stagger-item');
+              staggerChildren.forEach((child, index) => {
+                setTimeout(() => {
+                  (child as HTMLElement).classList.add('revealed');
+                }, index * 80);
+              });
+              
+              observer.unobserve(entry.target);
+            }
+          });
+        }, observerOptions);
+        
+        // Observe all sections and reveal elements
+        const revealElements = document.querySelectorAll('section, .reveal-on-scroll');
+        revealElements.forEach((el, index) => {
+          el.classList.add('reveal-element');
+          (el as HTMLElement).style.setProperty('--reveal-delay', `${index * 50}ms`);
+          observer.observe(el);
+        });
+        
+        // Mark grid items for stagger animation
+        document.querySelectorAll('.grid > [class*="p-"], .grid > [class*="rounded"]').forEach(item => {
+          item.classList.add('stagger-item');
+        });
+      });
+    </script>
+    
+    <style is:global>
+      /* Scroll reveal animations */
+      .reveal-element {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
+                    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        transition-delay: var(--reveal-delay, 0ms);
+      }
+      
+      .reveal-element.revealed {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      /* Stagger items */
+      .stagger-item {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      
+      .stagger-item.revealed {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      /* Smooth scroll behavior */
+      html {
+        scroll-behavior: smooth;
+      }
+      
+      /* Reduce motion for users who prefer it */
+      @media (prefers-reduced-motion: reduce) {
+        .reveal-element,
+        .stagger-item {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+        
+        html {
+          scroll-behavior: auto;
+        }
+        
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </body>
+</html>

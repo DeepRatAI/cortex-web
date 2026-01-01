@@ -1,0 +1,60 @@
+---
+import { type Lang, defaultLang, translations } from '../i18n/translations';
+
+interface Props {
+  lang?: Lang;
+}
+
+const lang = Astro.props.lang ?? defaultLang;
+const t = translations[lang].footer;
+---
+
+<footer class="py-12 px-4 sm:px-6 lg:px-8 border-t border-slate-800">
+  <div class="max-w-5xl mx-auto">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+      <!-- Logo + Tagline -->
+      <div class="flex items-center gap-4">
+        <img 
+          src="/logo.png" 
+          alt="Cortex Logo" 
+          class="w-12 h-12 rounded-xl object-contain"
+        />
+        <div>
+          <span class="text-lg font-bold text-white">Cortex</span>
+          <p class="text-sm text-slate-500">{t.tagline}</p>
+        </div>
+      </div>
+      
+      <!-- Links -->
+      <div class="flex items-center gap-6 text-sm text-slate-400">
+        <a href="https://github.com/DeepRatAI/cortex-knowledge-assistant" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">
+          GitHub
+        </a>
+        <a href="https://deepratai.github.io/cortex-knowledge-assistant" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">
+          Docs
+        </a>
+        <a href="https://github.com/DeepRatAI/cortex-knowledge-assistant/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">
+          AGPL-3.0
+        </a>
+      </div>
+    </div>
+    
+    <!-- Bottom -->
+    <div class="mt-8 pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2 text-sm text-slate-500">
+        <span>{t.builtBy}</span>
+        <a 
+          href={t.author.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-slate-300 hover:text-white transition-colors"
+        >
+          {t.author.name}
+        </a>
+      </div>
+      <p class="text-sm text-slate-500">
+        © 2026 DeepRat
+      </p>
+    </div>
+  </div>
+</footer>

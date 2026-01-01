@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3B82F6"/>
+      <stop offset="100%" style="stop-color:#8B5CF6"/>
+    </linearGradient>
+  </defs>
+  <!-- Brain outline -->
+  <path fill="url(#grad)" d="M64 8C33.1 8 8 33.1 8 64s25.1 56 56 56 56-25.1 56-56S94.9 8 64 8zm0 8c26.5 0 48 21.5 48 48s-21.5 48-48 48-48-21.5-48-48 21.5-48 48-48z"/>
+  <!-- Neural connections -->
+  <circle fill="url(#grad)" cx="64" cy="40" r="8"/>
+  <circle fill="url(#grad)" cx="44" cy="64" r="6"/>
+  <circle fill="url(#grad)" cx="84" cy="64" r="6"/>
+  <circle fill="url(#grad)" cx="52" cy="84" r="5"/>
+  <circle fill="url(#grad)" cx="76" cy="84" r="5"/>
+  <circle fill="url(#grad)" cx="64" cy="64" r="10"/>
+  <!-- Connection lines -->
+  <path stroke="url(#grad)" stroke-width="2" fill="none" d="M64 48 L64 54 M54 64 L50 64 M74 64 L78 64 M58 72 L54 79 M70 72 L74 79"/>
+</svg>
