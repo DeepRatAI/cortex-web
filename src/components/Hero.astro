@@ -7,13 +7,14 @@ interface Props {
 
 const lang = Astro.props.lang ?? defaultLang;
 const t = translations[lang].hero;
+const base = import.meta.env.BASE_URL;
 ---
 
 <section class="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden">
   <!-- Background Video -->
   <div class="absolute inset-0 z-0 flex items-center justify-center bg-slate-950">
     <video 
-      src="/demo.mp4" 
+      src={`${base}/demo.mp4`}
       autoplay 
       loop 
       muted 
