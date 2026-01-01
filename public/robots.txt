@@ -1,8 +1,8 @@
 # Cortex Knowledge Assistant - robots.txt
-# https://cortex.deeprat.tech
+# https://deepratai.github.io/cortex-web
 
 User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://cortex.deeprat.tech/sitemap.xml
+Sitemap: https://deepratai.github.io/cortex-web/sitemap.xml
